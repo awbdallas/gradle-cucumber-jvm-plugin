@@ -10,14 +10,11 @@ plugins {
     id 'com.gradle.plugin-publish' version '0.9.9'
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 
 repositories {
-    maven {
-        url "http://repo.bodar.com"
-    }
     jcenter()
 }
 
@@ -28,24 +25,16 @@ dependencies {
     compile 'org.zeroturnaround:zt-exec:1.8'
     compile 'net.masterthought:cucumber-reporting:3.2.0'
 
-    //testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    testCompile 'com.netflix.nebula:nebula-test:4.2.2'
-
-    //intTestCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    integTestCompile 'com.netflix.nebula:nebula-test:3.1.0'
+    testCompile 'com.netflix.nebula:nebula-test:6.3.0'
+    integTestCompile 'com.netflix.nebula:nebula-test:6.3.0'
 }
 
 sourceSets {
     test {
-        //remove incompatible jar from test class path
         runtimeClasspath = runtimeClasspath.minus files("$gradle.gradleHomeDir/lib/commons-io-1.4.jar")
     }
 }
 
-//codenarc {
-//    configFile = rootProject.file('codenarcrule.groovy')
-//    reportFormat = System.properties['codeNarcOutput'] ?: 'html'
-//}
 
 cobertura {
     coverageIgnoreTrivial = true
@@ -70,7 +59,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-// add javadoc/source jar tasks as artifacts
 artifacts {
     archives sourcesJar, javadocJar
 }
