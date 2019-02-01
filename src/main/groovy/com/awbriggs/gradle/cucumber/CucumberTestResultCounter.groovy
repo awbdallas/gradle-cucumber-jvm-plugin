@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import org.gradle.internal.logging.progress.ProgressLogger
 import org.gradle.internal.logging.progress.ProgressLoggerFactory

@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import groovy.mock.interceptor.MockFor
 import org.gradle.api.Project

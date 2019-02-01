@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import groovy.util.logging.Slf4j
 import groovyx.gpars.GParsPool

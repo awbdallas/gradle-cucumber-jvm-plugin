@@ -105,12 +105,12 @@ pluginBundle {
     tags = ["cucumber", "java", "testing"]
     plugins {
         cucumberJvm {
-            id = "com.commercehub.cucumber-jvm"
+            id = "com.awbriggs.cucumber-jvm"
             displayName = "Cucumber-JVM Plugin"
         }
     }
     mavenCoordinates {
-        groupId = "com.commercehub"
+        groupId = "com.awbriggs"
         artifactId = "gradle-cucumber-jvm-plugin"
     }
 }

@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 /**
  * Created by jgelais on 12/10/15.

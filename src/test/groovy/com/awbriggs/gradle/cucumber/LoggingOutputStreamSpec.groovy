@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.logging.Logger

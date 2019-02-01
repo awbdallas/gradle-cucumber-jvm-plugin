@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import net.masterthought.cucumber.ReportBuilder
 import net.masterthought.cucumber.Configuration

@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import groovy.util.logging.Slf4j
 import nebula.test.IntegrationSpec
@@ -15,7 +15,7 @@ class CucumberIntegrationSpec extends IntegrationSpec {
         copyResources('teststeps/TestSteps.groovy', 'src/test/groovy/cucumber/steps/TestSteps.groovy')
         buildFile << '''
             apply plugin: 'groovy'
-            apply plugin: 'com.commercehub.cucumber-jvm'
+            apply plugin: 'com.awbriggs.cucumber-jvm'
 
             addCucumberSuite 'test'
 

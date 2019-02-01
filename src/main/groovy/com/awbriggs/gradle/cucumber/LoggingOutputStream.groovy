@@ -1,4 +1,4 @@
-package com.commercehub.gradle.cucumber
+package com.awbriggs.gradle.cucumber
 
 import groovy.transform.CompileStatic
 import org.gradle.api.logging.LogLevel

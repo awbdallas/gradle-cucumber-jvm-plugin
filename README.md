@@ -38,12 +38,12 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.commercehub:gradle-cucumber-jvm-plugin:0.8"
+        classpath awbriggs
     }
 }
 plugins {
     id 'java'
-    id 'com.commercehub.cucumber-jvm' version '0.7'
+    id awbriggs version '0.7'
 }
 
   
