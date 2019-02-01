@@ -121,6 +121,7 @@ class CucumberRunner {
     }
 
     List<Feature> parseFeatureResult(File jsonReport) {
+        configuration.getEmbeddingDirectory().mkdirs()
         return new ReportParser(configuration).parseJsonFiles([jsonReport.absolutePath])
     }
 
