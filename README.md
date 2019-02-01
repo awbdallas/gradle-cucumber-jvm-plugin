@@ -101,7 +101,7 @@ An example `build.gradle.kts` file might look like this:
 ```kotlin
 plugins {
     id("java")
-    id("com.commercehub.cucumber-jvm").version("0.13")
+    id("com.awbriggs.cucumber-jvm").version("0.13")
 }
 
 cucumber {
