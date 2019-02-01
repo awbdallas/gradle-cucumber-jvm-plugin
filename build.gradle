@@ -1,12 +1,10 @@
 plugins {
     id 'groovy'
-    id 'net.saliman.cobertura' version '2.2.8'
     id 'idea'
-    id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'net.saliman.cobertura' version '2.2.8'
     id 'net.researchgate.release' version '2.1.2'
-    id "com.jfrog.bintray" version "1.2"
     id 'nebula.integtest' version '3.4.0'
-    id 'com.gradle.plugin-publish' version '0.9.9'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -58,59 +56,17 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-artifacts {
-    archives sourcesJar, javadocJar
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            artifact sourcesJar {
-                classifier "sources"
-            }
-
-            artifact javadocJar {
-                classifier "javadoc"
-            }
-
-            pom.withXml {
-                def Node root = asNode()
-            }
-        }
-    }
-}
-
-bintray {
-    user = project.hasProperty("bintrayUserName") ? bintrayUserName : null
-    key = project.hasProperty("bintrayApiKey") ? bintrayApiKey : null
-    publications = ["mavenJava"]
-    pkg {
-        repo = "main"
-        userOrg = "commercehub-oss"
-        name = 'gradle-cucumber-jvm-plugin'
-        licenses = ["Apache-2.0"]
-        vcsUrl = 'https://github.com/commercehub-oss/gradle-cucumber-jvm-plugin'
-    }
-}
-bintrayUpload.dependsOn build, sourcesJar, javadocJar
-createReleaseTag.dependsOn bintrayUpload
-createReleaseTag.dependsOn publishPlugins
-
 pluginBundle {
-    website = "https://github.com/commercehub-oss/gradle-cucumber-jvm-plugin"
-    vcsUrl = "https://github.com/commercehub-oss/gradle-cucumber-jvm-plugin"
+    website = "https://github.com/awbdallas/gradle-cucumber-jvm-plugin"
+    vcsUrl = "https://github.com/awbdallas/gradle-cucumber-jvm-plugin"
     description = "The gradle cucumber-jvm plugin provides the ability to run cucumber acceptance tests directly from a gradle build."
-    tags = ["cucumber", "java", "testing"]
+
     plugins {
         cucumberJvm {
+            tags = ["cucumber", "java", "testing"]
             id = "com.awbriggs.cucumber-jvm"
             displayName = "Cucumber-JVM Plugin"
+            version = '0.1'
         }
-    }
-    mavenCoordinates {
-        groupId = "com.awbriggs"
-        artifactId = "gradle-cucumber-jvm-plugin"
     }
 }
