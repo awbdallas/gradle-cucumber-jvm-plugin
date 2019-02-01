@@ -13,15 +13,16 @@ interface CucumberRunnerOptions {
 
     List<String> getPlugins()
 
-    boolean getIsDryRun()
+    Boolean getIsDryRun()
 
-    boolean getIsMonochrome()
+    Boolean getIsMonochrome()
 
-    boolean getIsStrict()
+    Boolean getIsStrict()
+
+    Boolean getJunitReport()
 
     String getSnippets()
 
-    int getMaxParallelForks()
+    Integer getMaxParallelForks()
 
-    boolean getJunitReport()
 }

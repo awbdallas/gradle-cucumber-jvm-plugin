@@ -16,7 +16,7 @@ class CucumberPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.plugins.apply(JavaPlugin)
 
-        project.extensions.create('cucumber', CucumberExtension, project, this)
+        project.extensions.create('cucumber', CucumberExtension.class, project, this)
         project.metaClass.addCucumberSuite = { String sourceSetName ->
             addSuite(sourceSetName, project)
         }

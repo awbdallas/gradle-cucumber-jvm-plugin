@@ -17,7 +17,7 @@ class CucumberTask extends DefaultTask implements CucumberRunnerOptions {
     public static final String CUCUMBER_EXTENSION_NAME = 'cucumber'
 
     SourceSet sourceSet
-    private final CucumberExtension extension = project.extensions[CUCUMBER_EXTENSION_NAME]
+    private final CucumberExtension extension = project.extensions[CUCUMBER_EXTENSION_NAME] as CucumberExtension
 
     List<String> tags = null
     Integer maxParallelForks = null
@@ -88,7 +88,7 @@ class CucumberTask extends DefaultTask implements CucumberRunnerOptions {
         String reportUrl = new ConsoleRenderer().asClickableFileUrl(new File(reportsDir, 'overview-failures.html'))
         String message = "There were failing tests. See the report at: $reportUrl"
 
-        if (ignoreFailures ?: extension.ignoreFailures) {
+        if (ignoreFailures ?: extension.isIgnoringFailures()) {
             logger.warn(message)
         } else {
             throw new GradleException(message)
@@ -100,36 +100,36 @@ class CucumberTask extends DefaultTask implements CucumberRunnerOptions {
     }
 
     List<String> getTags() {
-        return tags ?: extension.tags
+        return tags ?: extension.getTags()
     }
 
-    int getMaxParallelForks() {
-        return maxParallelForks ?: extension.maxParallelForks
+    Integer getMaxParallelForks() {
+        return maxParallelForks ?: extension.getMaxParallelForks()
     }
 
     List<String> getStepDefinitionRoots() {
-        return stepDefinitionRoots ?: extension.stepDefinitionRoots
+        return stepDefinitionRoots ?: extension.getStepDefinitionRoots()
     }
 
     List<String> getFeatureRoots() {
-        return featureRoots ?: extension.featureRoots
+        return featureRoots ?: extension.getFeatureRoots()
     }
 
     @Override
     List<String> getPlugins() {
-        return plugins ?: extension.plugins
+        return plugins ?: extension.getPlugins()
     }
 
-    boolean getIsDryRun() {
-        return isDryRun ?: extension.isDryRun
+    Boolean getIsDryRun() {
+        return isDryRun ?: extension.isDryRun()
     }
 
-    boolean getIsMonochrome() {
-        return isMonochrome ?: extension.isMonochrome
+    Boolean getIsMonochrome() {
+        return isMonochrome ?: extension.isMonochrome()
     }
 
-    boolean getIsStrict() {
-        return isStrict ?: extension.isStrict
+    Boolean getIsStrict() {
+        return isStrict ?: extension.isStrict()
     }
 
     String getSnippets() {
@@ -140,7 +140,7 @@ class CucumberTask extends DefaultTask implements CucumberRunnerOptions {
         systemProperties[property] = value
     }
 
-    boolean getJunitReport() {
-        return junitReport ?: extension.junitReport
+    Boolean getJunitReport() {
+        return junitReport ?: extension.isJunitReportEnabled()
     }
 }
