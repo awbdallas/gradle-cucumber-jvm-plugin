@@ -2,9 +2,8 @@ plugins {
     id 'groovy'
     id 'idea'
     id 'com.gradle.plugin-publish' version '0.10.0'
-    id 'net.saliman.cobertura' version '2.2.8'
-    id 'net.researchgate.release' version '2.1.2'
-    id 'nebula.integtest' version '3.4.0'
+    id 'net.saliman.cobertura' version '2.6.0'
+    id 'nebula.integtest' version '5.2.1'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -16,22 +15,15 @@ repositories {
 }
 
 dependencies {
-    compile gradleApi()
+    implementation gradleApi()
 
-    compile 'org.codehaus.gpars:gpars:1.2.1'
-    compile 'org.zeroturnaround:zt-exec:1.8'
-    compile 'net.masterthought:cucumber-reporting:3.2.0'
+    implementation 'org.codehaus.gpars:gpars:1.2.1'
+    implementation 'org.zeroturnaround:zt-exec:1.8'
+    implementation 'net.masterthought:cucumber-reporting:3.2.0'
+    testImplementation 'com.netflix.nebula:nebula-test:6.3.0'
 
-    testCompile 'com.netflix.nebula:nebula-test:6.3.0'
-    integTestCompile 'com.netflix.nebula:nebula-test:6.3.0'
+    integTestImplementation 'com.netflix.nebula:nebula-test:6.3.0'
 }
-
-sourceSets {
-    test {
-        runtimeClasspath = runtimeClasspath.minus files("$gradle.gradleHomeDir/lib/commons-io-1.4.jar")
-    }
-}
-
 
 cobertura {
     coverageIgnoreTrivial = true
