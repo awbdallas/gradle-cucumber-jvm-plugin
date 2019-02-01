@@ -28,24 +28,10 @@ The following gradle configuration will create a new Cucumber based test suite n
 to run up to 3 parallel forks. The `cucumberTest` source set will depend on the project's main source set.
 
 ```groovy
-buildscript {
-    repositories {
-        maven {
-            url "http://repo.bodar.com"
-        }
-        maven {
-          url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath awbriggs
-    }
-}
 plugins {
     id 'java'
-    id awbriggs version '0.7'
+    id 'com.awbriggs.cucumber-jvm' version '0.1'
 }
-
   
 addCucumberSuite 'cucumberTest'
   
@@ -101,7 +87,7 @@ An example `build.gradle.kts` file might look like this:
 ```kotlin
 plugins {
     id("java")
-    id("com.awbriggs.cucumber-jvm").version("0.13")
+    id("com.awbriggs.cucumber-jvm").version("0.1")
 }
 
 cucumber {
