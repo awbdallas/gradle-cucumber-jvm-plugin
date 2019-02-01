@@ -1,6 +1,8 @@
 # Gradle Cucumber-JVM Plugin
 
-[![Build Status](https://travis-ci.org/commercehub-oss/gradle-cucumber-jvm-plugin.png?branch=master)](https://travis-ci.org/commercehub-oss/gradle-cucumber-jvm-plugin)
+
+Fork from: https://github.com/commercehub-oss/gradle-cucumber-jvm-plugin
+
 
 The gradle cucumber-jvm plugin provides the ability to run [cucumber](http://cukes.info) acceptance tests directly
 from a gradle build.  The plugin utilizes the cucumber cli provided by the [cucumber-jvm](https://github.com/cucumber/cucumber-jvm) 
@@ -16,7 +18,7 @@ The inspiration for this plugin drew heavily from the work of
 [Samuel Brown's Cucumber Plugin](https://github.com/samueltbrown/gradle-cucumber-plugin) and 
 [Camilo Ribeiro's Cucumber Gradle Parallel Example](https://github.com/camiloribeiro/cucumber-gradle-parallel).
 
-## Contributors
+## Original Contributors
 
  * [Jay St.Gelais](http://github.com/JayStGelais)
 
