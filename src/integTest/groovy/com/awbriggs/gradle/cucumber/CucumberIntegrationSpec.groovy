@@ -3,11 +3,7 @@ package com.awbriggs.gradle.cucumber
 import groovy.util.logging.Slf4j
 import nebula.test.IntegrationSpec
 import nebula.test.functional.ExecutionResult
-import org.gradle.api.GradleException
 
-/**
- * Created by jgelais on 11/19/15.
- */
 @SuppressWarnings('DuplicateStringLiteral')
 @Slf4j
 class CucumberIntegrationSpec extends IntegrationSpec {
@@ -22,6 +18,7 @@ class CucumberIntegrationSpec extends IntegrationSpec {
             cucumber {
                 tags = ["@test", "@happypath", "~@ignore"]
             }
+
             repositories {
                 jcenter()
             }
@@ -46,10 +43,8 @@ class CucumberIntegrationSpec extends IntegrationSpec {
         log.info(result.standardOutput)
 
         then:
-        !result.wasUpToDate(':compileTestGroovy')
         result.wasExecuted(':test')
-        new File(projectDir, 'build/reports/test').list().flatten()*.replace('\\', '/')
-            .findResults { it.matches('report-feature_features-happypath-feature?\\.html') ? it : null } != null
+        fileExists('build/reports/test/cucumber-html-reports/overview-features.html')
     }
 
     def testFailingBackgroundStep() {
@@ -58,11 +53,11 @@ class CucumberIntegrationSpec extends IntegrationSpec {
                 'src/test/resources/features/failing-background-test.feature')
 
         when:
-        ExecutionResult result = runTasksSuccessfully('test')
-        log.info(result.standardOutput)
+        ExecutionResult result = runTasksWithFailure('test')
 
         then:
-        thrown GradleException
+        fileExists('build/reports/test/cucumber-html-reports/overview-failures.html')
+        result.standardError.contains("build/reports/test/cucumber-html-reports/overview-failures.html")
     }
 
     def testSysProps() {
@@ -71,7 +66,6 @@ class CucumberIntegrationSpec extends IntegrationSpec {
 
         when:
         ExecutionResult result = runTasksSuccessfully('test')
-        log.info(result.standardOutput)
 
         then:
         result.wasExecuted(':test')
@@ -83,9 +77,22 @@ class CucumberIntegrationSpec extends IntegrationSpec {
 
         when:
         ExecutionResult result = runTasksSuccessfully('test')
-        log.info(result.standardOutput)
 
         then:
         result.wasExecuted(':test')
     }
+
+    def happyPathReportsDirectoryCreated() {
+        given:
+        copyResources('testfeatures/happypath.feature', 'src/test/resoucres/features/happypath.feature')
+
+
+        when:
+        ExecutionResult result = runTasksSuccessfully('test')
+
+        then:
+        fileExists('build/reports/test/cucumber-html-reports/overview-features.html')
+
+    }
+
 }

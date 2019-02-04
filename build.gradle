@@ -58,7 +58,7 @@ pluginBundle {
             tags = ["cucumber", "java", "testing"]
             id = "com.awbriggs.cucumber-jvm"
             displayName = "Cucumber-JVM Plugin"
-            version = '0.1'
+            version = '0.1.1'
         }
     }
 }
