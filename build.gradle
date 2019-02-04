@@ -1,14 +1,12 @@
 plugins {
-    id 'groovy'
     id 'idea'
+    id 'groovy'
     id 'com.gradle.plugin-publish' version '0.10.0'
-    id 'net.saliman.cobertura' version '2.6.0'
     id 'nebula.integtest' version '5.2.1'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
-
 
 repositories {
     jcenter()
@@ -25,18 +23,6 @@ dependencies {
     integTestImplementation 'com.netflix.nebula:nebula-test:6.3.0'
 }
 
-cobertura {
-    coverageIgnoreTrivial = true
-    auxiliaryClasspath += project.sourceSets.main.runtimeClasspath
-}
-
-test {
-    finalizedBy coberturaReport
-}
-
-integrationTest {
-    finalizedBy coberturaReport
-}
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
