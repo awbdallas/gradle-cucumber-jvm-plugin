@@ -21,7 +21,8 @@ class CucumberTaskSpec extends Specification {
         expect:
         Project project = ProjectBuilder.builder().build()
         project.apply(plugin: 'cucumber-jvm')
-        project.addCucumberSuite('cucumberTest')
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite('cucumberTest', project)
         CucumberTask task = (CucumberTask) project.tasks.getByPath('cucumberTest')
         cucumberRunnerMock.use {
             task.runTests()
@@ -38,7 +39,8 @@ class CucumberTaskSpec extends Specification {
         Project project = ProjectBuilder.builder().build()
         project.apply(plugin: 'idea')
         project.apply(plugin: 'cucumber-jvm')
-        project.addCucumberSuite('cucumberTest')
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite('cucumberTest', project)
         CucumberTask task = (CucumberTask) project.tasks.getByPath('cucumberTest')
         cucumberRunnerMock.use {
             task.runTests()

@@ -21,8 +21,8 @@ class CucumberPluginSpec extends PluginProjectSpec {
         when:
         project.apply(plugin: 'java')
         project.apply(plugin: pluginName)
-        project.sourceSets.create(suiteName)
-        project.addCucumberSuite(suiteName)
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite(suiteName, project)
 
         then:
         project.tasks.findByName(suiteName)
@@ -35,8 +35,8 @@ class CucumberPluginSpec extends PluginProjectSpec {
         when:
         project.apply(plugin: 'java')
         project.apply(plugin: pluginName)
-        project.sourceSets.create(suiteName)
-        project.cucumber.suite(suiteName)
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite(suiteName, project)
 
         then:
         project.tasks.findByName(suiteName)
@@ -49,7 +49,8 @@ class CucumberPluginSpec extends PluginProjectSpec {
         when:
         project.apply(plugin: 'java')
         project.apply(plugin: pluginName)
-        project.addCucumberSuite(suiteName)
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite(suiteName, project)
 
         then:
         project.tasks.findByName(suiteName)
@@ -62,7 +63,8 @@ class CucumberPluginSpec extends PluginProjectSpec {
         when:
         project.apply(plugin: 'java')
         project.apply(plugin: pluginName)
-        project.cucumber.suite(suiteName)
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite(suiteName, project)
 
         then:
         project.tasks.findByName(suiteName)
@@ -75,7 +77,8 @@ class CucumberPluginSpec extends PluginProjectSpec {
         when:
         project.apply(plugin: 'java')
         project.apply(plugin: pluginName)
-        project.addCucumberSuite(suiteName)
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite(suiteName, project)
 
         then:
         project.tasks.findByName(suiteName) instanceof CucumberTask
@@ -87,7 +90,8 @@ class CucumberPluginSpec extends PluginProjectSpec {
         when:
         project.apply(plugin: 'java')
         project.apply(plugin: pluginName)
-        project.cucumber.suite(suiteName)
+        CucumberExtension extension = project.extensions.findByType(CucumberExtension.class)
+        extension.addSuite(suiteName, project)
 
         then:
         project.tasks.findByName(suiteName) instanceof CucumberTask

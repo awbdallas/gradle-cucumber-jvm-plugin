@@ -6,8 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.gradle.api.Project;
+import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.plugins.ide.idea.IdeaPlugin;
 
 public class CucumberExtension {
+    private static final String DEFAULT_PARENT_SOURCESET = "main";
 
     private List<String> tags;
     private List<String> stepDefinitionRoots;
@@ -31,10 +35,6 @@ public class CucumberExtension {
     public CucumberExtension(Project project, CucumberPlugin plugin) {
         this.project = project;
         this.plugin = plugin;
-    }
-
-    void suite(String name) {
-        plugin.addSuite(name, project);
     }
 
     public List<String> getTags() {
@@ -174,6 +174,29 @@ public class CucumberExtension {
 
     public void setPlugins(List<String> plugins) {
         this.plugins = plugins;
+    }
+
+    public void setSuites(List<String> suiteNames) {
+        suiteNames.forEach(name -> this.addSuite(name, project));
+    }
+
+    protected void addSuite(String sourceSetName, Project project) {
+        JavaPluginConvention convention = project.getConvention().getPlugin(JavaPluginConvention.class);
+        SourceSet parentSourceSet = convention.getSourceSets().getByName(DEFAULT_PARENT_SOURCESET);
+
+        SourceSet newSourceSet = (convention.getSourceSets().findByName(sourceSetName) == null) ? convention.getSourceSets().create(sourceSetName) : convention.getSourceSets().findByName(sourceSetName);
+        newSourceSet.setCompileClasspath(newSourceSet.getCompileClasspath().plus(parentSourceSet.getOutput()).plus(parentSourceSet.getCompileClasspath()));
+        newSourceSet.setRuntimeClasspath(newSourceSet.getOutput().plus(newSourceSet.getCompileClasspath()));
+
+        CucumberTask task = project.getTasks().replace(sourceSetName, CucumberTask.class);
+        task.dependsOn(newSourceSet.getClassesTaskName());
+        task.sourceSet(newSourceSet);
+
+        project.getPlugins().withType(IdeaPlugin.class, plugin -> {
+            plugin.getModel().getModule().getTestSourceDirs().addAll(newSourceSet.getAllSource().getSrcDirs());
+            plugin.getModel().getModule().getTestSourceDirs().addAll(newSourceSet.getResources().getSrcDirs());
+        });
+
     }
 
 

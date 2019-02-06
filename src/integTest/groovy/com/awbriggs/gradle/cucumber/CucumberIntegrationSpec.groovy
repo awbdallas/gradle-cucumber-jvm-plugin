@@ -13,9 +13,8 @@ class CucumberIntegrationSpec extends IntegrationSpec {
             apply plugin: 'groovy'
             apply plugin: 'com.awbriggs.cucumber-jvm'
 
-            addCucumberSuite 'test'
-
             cucumber {
+                suites = ['test']
                 tags = ["@test", "@happypath", "~@ignore"]
             }
 

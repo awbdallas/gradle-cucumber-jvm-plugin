@@ -32,10 +32,9 @@ plugins {
     id 'java'
     id 'com.awbriggs.cucumber-jvm' version '0.1.1'
 }
-  
-addCucumberSuite 'cucumberTest'
-  
+
 cucumber {
+    suites = ['cucumberTest']
     maxParallelForks = 3
 }
 
@@ -91,7 +90,7 @@ plugins {
 }
 
 cucumber {
-    suite("cucumberTest")
+    suites = List.of("cucumberTest")
     maxParallelForks = 3
 }
 
@@ -125,7 +124,7 @@ property values form the project defaults. Both levels of configuration make the
 * `maxParallelForks`: Maximum number of forked Java processes to start to run tests in parallel. Defaults to `1`.
 * `jvmArgs`: List of custom jvm arguments to pass to test execution
 * `systemProperties`: Map of properties to values (String → String) to pass to the forked test running JVMs as Java system properties.
-* `suite("someName")`: Method to register a new suite. This can be used as an alternative to calling `addCucumberSuite()`. If you use the Kotlin DSL it is the only way to register a suite.
+* `suites(["someName"])`: Method to register a new suites.
 
 ### Reporting
 
