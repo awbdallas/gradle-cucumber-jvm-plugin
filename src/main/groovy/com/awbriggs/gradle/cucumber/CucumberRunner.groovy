@@ -33,14 +33,14 @@ class CucumberRunner {
     private static final int EMPTY_RESULT_FILE_MAX_SIZE_IN_BYTES = 16
 
     CucumberRunnerOptions options
-    CucumberTestResultCounter testResultCounter
+    CucumberTestResults testResultCounter
     List<String> jvmArgs
     Map<String, String> systemProperties
     Configuration configuration
     Logger gradleLogger
 
     CucumberRunner(CucumberRunnerOptions options, Configuration configuration,
-                   CucumberTestResultCounter testResultCounter, List<String> jvmArgs, Map<String, String> systemProperties,
+                   CucumberTestResults testResultCounter, List<String> jvmArgs, Map<String, String> systemProperties,
                    Logger gradleLogger) {
         this.options = options
         this.testResultCounter = testResultCounter
@@ -123,20 +123,6 @@ class CucumberRunner {
     List<Feature> parseFeatureResult(File jsonReport) {
         configuration.getEmbeddingDirectory().mkdirs()
         return new ReportParser(configuration).parseJsonFiles([jsonReport.absolutePath])
-    }
-
-    CucumberFeatureResult createResult(Feature feature) {
-        CucumberFeatureResult result = new CucumberFeatureResult(
-                totalScenarios: feature.passedScenarios + feature.failedScenarios,
-                failedScenarios: feature.failedScenarios,
-                totalSteps: feature.passedSteps + feature.failedSteps,
-                failedSteps: feature.failedSteps,
-                skippedSteps: feature.skippedSteps,
-                pendingSteps: feature.pendingSteps,
-                undefinedSteps: feature.undefinedSteps
-        )
-
-        return result
     }
 
     protected void applySnippetArguments(List<String> args) {
@@ -225,22 +211,25 @@ class CucumberRunner {
         }
     }
 
-    private void handleResult(File resultsFile, File consoleOutLogFile,
-                              AtomicBoolean hasFeatureParseErrors, SourceSet sourceSet) {
-        List<CucumberFeatureResult> results = parseFeatureResult(resultsFile).collect {
-            log.debug("Logging result for $it.name")
-            createResult(it)
-        }
-        results.each { CucumberFeatureResult result ->
+    private void handleResult(File resultsFile, File consoleOutLogFile, AtomicBoolean hasFeatureParseErrors, SourceSet sourceSet) {
+        parseFeatureResult(resultsFile).each { Feature result ->
             testResultCounter.afterFeature(result)
 
-            if (result.hadFailures()) {
-                if (result.undefinedSteps > 0) {
+            if (hasFailures(result)) {
+                if (hasParseErrors(result)) {
                     hasFeatureParseErrors.set(true)
                 }
                 log.error('{}:\r\n {}', sourceSet.name, consoleOutLogFile.text)
             }
         }
+    }
+
+    private boolean hasFailures(Feature result) {
+        return (result.getFailedSteps() > 0 || result.getFailedScenarios() > 0 || result.getUndefinedSteps() > 0);
+    }
+
+    private boolean hasParseErrors(Feature result) {
+        return result.getUndefinedSteps() > 0;
     }
 
     private String convertPathToPackage(Path path) {

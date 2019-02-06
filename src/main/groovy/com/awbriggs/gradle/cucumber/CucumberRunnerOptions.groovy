@@ -24,5 +24,4 @@ interface CucumberRunnerOptions {
     String getSnippets()
 
     Integer getMaxParallelForks()
-
 }

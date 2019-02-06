@@ -6,9 +6,6 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSet
 import org.gradle.plugins.ide.idea.IdeaPlugin
 
-/**
- * This is the main plugin file. Put a description of your plugin here.
- */
 class CucumberPlugin implements Plugin<Project> {
 
     public static final String DEFAULT_PARENT_SOURCESET = 'main'
